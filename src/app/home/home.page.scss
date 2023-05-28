@@ -1,27 +1,17 @@
-#container {
-  text-align: center;
+.home {
+  margin-top: var(--header-area);
 
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
+  &--title {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+  }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
-}
+  &--currency {
+    margin-top: 2rem;
+  }
 
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
-  margin: 0;
-}
-
-#container a {
-  text-decoration: none;
+  &--action {
+    margin-top: 2rem;
+  }
 }
