@@ -1,0 +1,7 @@
+{
+  "name": "app.ionic.angular.action-labs",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
