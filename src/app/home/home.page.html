@@ -1,16 +1,62 @@
 <div class="home ion-padding">
-
   <div class="home--title">
     <h2>BRL EXCHANGE RATE</h2>
   </div>
-
   <div class="home--currency">
     <ion-input fill="solid" placeholder="Enter the currency code"></ion-input>
   </div>
-
-  <div class="home--action">
-    <ion-button expand="block" class="button-submit">EXCHANGE RESULT</ion-button>
-  </div>
-  <div>
+  <ion-item>
+    <div class="home--action">
+      <ion-button expand="block" class="button-submit">EXCHANGE RESULT</ion-button>
+    </div>
+  </ion-item>
+  <div class="home--result">
+    <ion-item class="border-blue">
+      <section>
+        <div class="home--result--header">
+          <div class="home--result--header--date">
+            <span>Teste</span>
+            <p>Teste</p>
+          </div>
+          <div class="home--result--header--currency">
+            <h2>Moeda</h2>
+          </div>
+        </div>
+        <div class="home--result--current-value">
+          <h2>VALUE</h2>
+        </div>
+        <div class="home--result--last-days">
+          <ion-accordion-group>
+            <ion-accordion class="icon" value="first" toggleIcon="add-outline">
+              <ion-item slot="header">
+                <ion-label>LAST 30 DAYS</ion-label>
+              </ion-item>
+              <div class="home--result--last-days--items" slot="content">
+                <ion-card>
+                  <ion-card-content>
+                    <section>
+                      <ion-label color="primary">Data</ion-label>
+                    </section>
+                    <div class="infos">
+                      <section>
+                        <ion-label>Teste: <span>Teste</span></ion-label>
+                        <ion-label>Teste: <span>Teste</span></ion-label>
+                      </section>
+                      <section>
+                        <ion-label>Teste: <span>Teste</span></ion-label>
+                        <ion-label>Teste: <span>Teste</span></ion-label>
+                      </section>
+                    </div>
+                    <section>
+                      <ion-label>Teste: <span>Teste</span></ion-label>
+                    </section>
+                  </ion-card-content>
+                </ion-card>
+              </div>
+            </ion-accordion>
+          </ion-accordion-group>
+        </div>
+      </section>
+    </ion-item>
   </div>
 </div>

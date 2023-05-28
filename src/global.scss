@@ -27,3 +27,16 @@
 
 @import "theme/typography/texts";
 @import "theme/buttons/buttons";
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
+ion-accordion-group{
+  ion-accordion {
+    .ion-accordion-toggle-icon {
+      color: var(--ion-color-primary);
+      font-size: 2rem;
+    }
+  }
+}
