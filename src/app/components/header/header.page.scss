@@ -1,0 +1,17 @@
+.header {
+
+  &--logo {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
+   ion-img {
+     width: 12rem;
+   }
+  }
+
+  &--line-bottom {
+    margin: 0 auto;
+    width: 90%;
+  }
+}
