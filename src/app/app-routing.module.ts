@@ -15,6 +15,10 @@ const routes: Routes = [
     path: 'header',
     loadChildren: () => import('./components/header/header.module').then( m => m.HeaderPageModule)
   },
+  {
+    path: 'footer',
+    loadChildren: () => import('./components/footer/footer.module').then( m => m.FooterPageModule)
+  },
 ];
 
 @NgModule({

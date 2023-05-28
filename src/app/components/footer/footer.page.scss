@@ -1,0 +1,11 @@
+ion-toolbar {
+  height: 2rem;
+  display: flex;
+  align-items: center;
+
+  ion-title {
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: 200;
+  }
+}
