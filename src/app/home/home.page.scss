@@ -11,6 +11,10 @@
 
   &--currency {
     margin-top: 2rem;
+
+    ion-input {
+      --highlight-color-valid: var(--ion-color-primary);
+    }
   }
 
   ion-item {
@@ -43,6 +47,11 @@
       width: 100%;
       display: flex;
       justify-content: space-between;
+
+      span {
+        font-weight: bold;
+        font-size: 1.2rem;
+      }
     }
 
     &--current-value {

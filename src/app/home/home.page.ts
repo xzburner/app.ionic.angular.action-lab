@@ -14,6 +14,7 @@ import { differenceInDays, parseISO } from 'date-fns';
 })
 export class HomePage {
 
+  public fromSymbol: string = '';
   public toSymbol: string = 'BRL';
   public apiKey: string = 'RVZG0GHEV2KORLNA';
   public isLoading: boolean = false;
@@ -35,15 +36,15 @@ export class HomePage {
 
   public getCurrentExchangeRate(): void {
     this.isLoading = true;
-    console.log(this.isLoading);
     const formData = this.exchangeRateForm.value;
-    const fromSymbol = formData.fromSymbol;
+    this.fromSymbol = formData.fromSymbol;
 
-    this.exchangeRateService.getCurrentExchangeRate(this.apiKey, fromSymbol, this.toSymbol)
+    this.exchangeRateService.getCurrentExchangeRate(this.apiKey, this.fromSymbol, this.toSymbol)
       .subscribe(
         data => {
           if (data.success) {
             this.currentExchangeRate = data;
+            console.log(this.currentExchangeRate);
             this.isLoading = false;
           }
           else {

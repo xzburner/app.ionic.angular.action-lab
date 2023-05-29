@@ -4,7 +4,7 @@
   </div>
   <form [formGroup]="exchangeRateForm" (ngSubmit)="getCurrentExchangeRate()">
     <div class="home--currency">
-      <ion-input fill="solid" placeholder="Enter the currency code" formControlName="fromSymbol"></ion-input>
+      <ion-input fill="solid" label="Enter the currency code" labelPlacement="floating" formControlName="fromSymbol"></ion-input>
     </div>
     <ion-item>
       <div class="home--action">
@@ -14,18 +14,17 @@
         </ion-button>
       </div>
     </ion-item>
-    <span *ngIf="isLoading">teste</span>
   </form>
-  <div class="home--result">
+  <div class="home--result" *ngIf="currentExchangeRate?.exchangeRate">
     <ion-item class="border-blue">
       <section>
         <div class="home--result--header">
-          <div class="home--result--header--date">
-            <span>Teste</span>
-            <p>Teste</p>
-          </div>
+          <section>
+            <span>Exchange rate now</span>
+            <p>{{currentExchangeRate?.lastUpdatedAt | date: 'dd/MM/yyyy - HH:mm:ss'}}</p>
+          </section>
           <div class="home--result--header--currency">
-            <h2>Moeda</h2>
+            <h2>{{fromSymbol}}/{{toSymbol}}</h2>
           </div>
         </div>
         <div class="home--result--current-value">
