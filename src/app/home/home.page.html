@@ -36,24 +36,24 @@
               <ion-item slot="header">
                 <ion-label>LAST 30 DAYS</ion-label>
               </ion-item>
-              <div class="home--result--last-days--items" slot="content" *ngFor="let item of dailyExchangeRate">
+              <div class="home--result--last-days--items" slot="content" *ngFor="let item of filteredDays">
                 <ion-card>
                   <ion-card-content>
                     <section>
-                      <ion-label color="primary">Data</ion-label>
+                      <ion-label color="primary">{{item.date | date: 'dd/MM/yyyy'}}</ion-label>
                     </section>
                     <div class="infos">
                       <section>
-                        <ion-label>Teste: <span>Teste</span></ion-label>
-                        <ion-label>Teste: <span>Teste</span></ion-label>
+                        <ion-label>OPEN: <span>{{item.open | currency: 'BRL': true: '1.2-4'}}</span></ion-label>
+                        <ion-label>HIGH: <span>{{item.high | currency: 'BRL': true: '1.2-4'}}</span></ion-label>
                       </section>
                       <section>
-                        <ion-label>Teste: <span>Teste</span></ion-label>
-                        <ion-label>Teste: <span>Teste</span></ion-label>
+                        <ion-label>CLOSE: <span>{{item.close | currency: 'BRL': true: '1.2-4'}}</span></ion-label>
+                        <ion-label>LOW: <span>{{item.low | currency: 'BRL': true: '1.2-4'}}</span></ion-label>
                       </section>
                     </div>
                     <section>
-                      <ion-label>Teste: <span>Teste</span></ion-label>
+                      <ion-label>CLOSE DIFF (%): <span>Teste</span></ion-label>
                     </section>
                   </ion-card-content>
                 </ion-card>

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessagesConst } from '../consts/messages-const';
 import { CurrentExchangeRateModel } from '../models/current-exchange-rate.model';
-import { DailyExchangeRateModel } from '../models/daily-exchange-rate.model';
+import { DailyExchangeRateModel, ExchageRateData } from '../models/daily-exchange-rate.model';
 import { ExchangeRateService } from '../services/exchange-rate.service';
 import { ToastService } from '../services/toast.service';
 import { differenceInDays, parseISO } from 'date-fns';
@@ -22,7 +22,8 @@ export class HomePage implements OnInit {
   public currentDate: Date = new Date();
 
   public currentExchangeRate?: CurrentExchangeRateModel;
-  public dailyExchangeRate: DailyExchangeRateModel[] = [];
+  public dailyExchangeRate?: DailyExchangeRateModel;
+  public filteredDays: ExchageRateData[] = [];
   public exchangeRateForm: FormGroup;
 
   constructor(
@@ -42,7 +43,7 @@ export class HomePage implements OnInit {
   public codeToUperCase() {
     const inputValueControl = this.exchangeRateForm.get('fromSymbol') as FormControl;
     inputValueControl.valueChanges.pipe(
-      map(value => value.toUpperCase())
+      map(value => value.toUpperCase()),
     ).subscribe(upperCaseValue => {
       inputValueControl.setValue(upperCaseValue, { emitEvent: false });
     });
@@ -58,11 +59,9 @@ export class HomePage implements OnInit {
         data => {
           if (data.success) {
             this.currentExchangeRate = data;
-            console.log(this.currentExchangeRate);
-            this.dailyExchangeRate = [];
+            this.filteredDays = [];
             this.isLoading = false;
-          }
-          else {
+          } else {
             this.currentExchangeRate = undefined;
             this.toastService.presentToast(MessagesConst.INVALID_CODE);
             this.isLoading = false;
@@ -73,17 +72,17 @@ export class HomePage implements OnInit {
 
   public getDailyExchangeRate(): void {
     this.isLoading = true;
-    console.log(this.fromSymbol);
     this.exchangeRateService.getDailyExchangeRate(this.apiKey, this.fromSymbol, this.toSymbol)
       .subscribe(
         data => {
-          if (data.success) {// @ts-ignore
-            this.dailyExchangeRate = data.data.filter(item => {
+          if (data.success) {
+            this.dailyExchangeRate = data;
+            // @ts-ignore
+            this.filteredDays = data.data.filter(item => {
               const itemDate = parseISO(item.date);
               const daysDifference = differenceInDays(this.currentDate, itemDate);
               return daysDifference <= 30;
             });
-            console.log(data);
           }
         },
       );

@@ -1,5 +1,10 @@
 export interface DailyExchangeRateModel {
   data: ExchageRateData[],
+  from: string,
+  lastUpdatedAt: Date,
+  rateLimitExceeded: boolean,
+  success: boolean,
+  to: string,
 }
 
 export interface ExchageRateData {
