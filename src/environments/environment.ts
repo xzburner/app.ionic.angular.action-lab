@@ -7,7 +7,8 @@ import { routes } from './routes';
 export const environment = {
   production: false,
   api: {
-    baseUrl: 'https://api-brl-exchange.actionlabs.com.br/api/1.0/open/currentExchangeRate',
+    getCurrentExchangeRate: 'https://api-brl-exchange.actionlabs.com.br/api/1.0/open/currentExchangeRate',
+    getDailyExchangeRate: 'https://api-brl-exchange.actionlabs.com.br/api/1.0/open/dailyExchangeRate',
     routes,
   },
 };

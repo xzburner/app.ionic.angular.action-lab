@@ -11,13 +11,13 @@ import { FooterPageModule } from './components/footer/footer.module';
 import { HeaderPageModule } from './components/header/header.module';
 
 import ptBr from '@angular/common/locales/pt';
-import { registerLocaleData } from '@angular/common';
+import { CommonModule, registerLocaleData } from '@angular/common';
 
 registerLocaleData(ptBr);
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HeaderPageModule, FooterPageModule, HttpClientModule],
+  imports: [CommonModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, HeaderPageModule, FooterPageModule, HttpClientModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, { provide: LOCALE_ID, useValue: 'pt' },],
   bootstrap: [AppComponent],
 })

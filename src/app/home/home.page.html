@@ -14,6 +14,7 @@
         </ion-button>
       </div>
     </ion-item>
+    <span *ngIf="isLoading">teste</span>
   </form>
   <div class="home--result">
     <ion-item class="border-blue">
@@ -32,11 +33,11 @@
         </div>
         <div class="home--result--last-days">
           <ion-accordion-group>
-            <ion-accordion class="icon" value="first" toggleIcon="add-outline">
+            <ion-accordion class="icon" value="first" toggleIcon="add-outline" (click)="getDailyExchangeRate()">
               <ion-item slot="header">
                 <ion-label>LAST 30 DAYS</ion-label>
               </ion-item>
-              <div class="home--result--last-days--items" slot="content">
+              <div class="home--result--last-days--items" slot="content" *ngFor="let item of dailyExchangeRate">
                 <ion-card>
                   <ion-card-content>
                     <section>
