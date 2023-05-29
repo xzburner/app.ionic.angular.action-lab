@@ -10,13 +10,8 @@ export class ExchangeRateService {
 
   constructor(private http: HttpClient) { }
 
-  public getCurrentExchangeRate(apiKey: string, fromSymbol: string, toSymbol: string): Observable<any> {
-    const url = `${environment.api.getCurrentExchangeRate}?apiKey=${apiKey}&from_symbol=${fromSymbol}&to_symbol=${toSymbol}`;
-    return this.http.get(url);
-  }
-
-  public getDailyExchangeRate(apiKey: string, fromSymbol: string, toSymbol: string): Observable<any> {
-    const url = `${environment.api.getDailyExchangeRate}?apiKey=${apiKey}&from_symbol=${fromSymbol}&to_symbol=${toSymbol}`;
+  public getExchangeRate(apiUrl: string, apiKey: string, fromSymbol: string, toSymbol: string): Observable<any> {
+    const url = `${apiUrl}?apiKey=${apiKey}&from_symbol=${fromSymbol}&to_symbol=${toSymbol}`;
     return this.http.get(url);
   }
 }

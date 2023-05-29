@@ -7,6 +7,7 @@ import { ExchangeRateService } from '../services/exchange-rate.service';
 import { ToastService } from '../services/toast.service';
 import { differenceInDays, parseISO } from 'date-fns';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -40,11 +41,11 @@ export class HomePage implements OnInit {
     });
   }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.codeToUperCase();
   }
 
-  public codeToUperCase() {
+  public codeToUperCase(): void {
     const inputValueControl = this.exchangeRateForm.get('fromSymbol') as FormControl;
     inputValueControl.valueChanges.pipe(
       map(value => value.toUpperCase()),
@@ -58,7 +59,7 @@ export class HomePage implements OnInit {
     const formData = this.exchangeRateForm.value;
     this.fromSymbol = formData.fromSymbol;
 
-    this.exchangeRateService.getCurrentExchangeRate(this.apiKey, this.fromSymbol, this.toSymbol)
+    this.exchangeRateService.getExchangeRate(environment.api.getCurrentExchangeRate, this.apiKey, this.fromSymbol, this.toSymbol)
       .subscribe(
         async data => {
           if (data.success) {
@@ -81,7 +82,7 @@ export class HomePage implements OnInit {
   public getDailyExchangeRate(): void {
     this.isLoadingItemsFiltered = true;
     this.toggleAccordion();
-    this.exchangeRateService.getDailyExchangeRate(this.apiKey, this.fromSymbol, this.toSymbol)
+    this.exchangeRateService.getExchangeRate(environment.api.getDailyExchangeRate, this.apiKey, this.fromSymbol, this.toSymbol)
       .subscribe(
         async data => {
           if (data.success) {
@@ -105,11 +106,11 @@ export class HomePage implements OnInit {
       );
   }
 
-  toggleAccordion() {
+  toggleAccordion(): void {
     this.isAccordionExpanded = !this.isAccordionExpanded;
   }
 
-  public getDifferenceOnCloseDay() {
+  public getDifferenceOnCloseDay(): void {
     for (let i = 0; i < this.filteredItems.length - 1; i++) {
       const currentDay = this.filteredItems[i];
       const previousDay = this.filteredItems[i + 1];
