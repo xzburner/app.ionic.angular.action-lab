@@ -1,2 +1,2 @@
-# app.ionic.angular.action-lab
+# app.ionic.angular.action-labs
 A action labs project
