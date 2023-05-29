@@ -2,14 +2,19 @@
   <div class="home--title">
     <h2>BRL EXCHANGE RATE</h2>
   </div>
-  <div class="home--currency">
-    <ion-input fill="solid" placeholder="Enter the currency code"></ion-input>
-  </div>
-  <ion-item>
-    <div class="home--action">
-      <ion-button expand="block" class="button-submit">EXCHANGE RESULT</ion-button>
+  <form [formGroup]="exchangeRateForm" (ngSubmit)="getCurrentExchangeRate()">
+    <div class="home--currency">
+      <ion-input fill="solid" placeholder="Enter the currency code" formControlName="fromSymbol"></ion-input>
     </div>
-  </ion-item>
+    <ion-item>
+      <div class="home--action">
+        <ion-button expand="block" class="button-submit" type="submit" [disabled]="exchangeRateForm.invalid">
+          <p *ngIf="!isLoading">EXCHANGE RESULT</p>
+          <ion-spinner name="crescent" *ngIf="isLoading"></ion-spinner>
+        </ion-button>
+      </div>
+    </ion-item>
+  </form>
   <div class="home--result">
     <ion-item class="border-blue">
       <section>
@@ -23,7 +28,7 @@
           </div>
         </div>
         <div class="home--result--current-value">
-          <h2>VALUE</h2>
+          <h2>{{ currentExchangeRate?.exchangeRate | currency: 'BRL': true}}</h2>
         </div>
         <div class="home--result--last-days">
           <ion-accordion-group>
