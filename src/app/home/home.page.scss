@@ -64,12 +64,18 @@
 
     &--last-days {
 
+      ion-icon {
+        color: var(--ion-color-primary);
+        font-size: 1.5rem;
+      }
+
       &--items {
         padding: 0.5rem;
         background-color: var(--ion-color-light);
 
         ion-card {
           margin: 0.1rem;
+          width: 90%;
 
           ion-card-content {
             display: flex;

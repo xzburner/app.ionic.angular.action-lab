@@ -21,7 +21,7 @@
         <div class="home--result--header">
           <section>
             <span>Exchange rate now</span>
-            <p>{{currentExchangeRate?.lastUpdatedAt | date: 'dd/MM/yyyy - HH:mm:ss'}}</p>
+            <p>{{currentExchangeRate?.lastUpdatedAt | date: 'dd/MM/yyyy - HH:mm'}}</p>
           </section>
           <div class="home--result--header--currency">
             <h2>{{fromSymbol}}/{{toSymbol}}</h2>
@@ -32,9 +32,12 @@
         </div>
         <div class="home--result--last-days">
           <ion-accordion-group>
-            <ion-accordion class="icon" value="first" toggleIcon="add-outline" (click)="getDailyExchangeRate()">
+            <ion-accordion class="icon" value="first" toggleIcon="" (click)="toggleAccordion()">
               <ion-item slot="header">
                 <ion-label>LAST 30 DAYS</ion-label>
+                <ion-icon name="add-outline" *ngIf="!isAccordionExpanded && filteredItems.length > 0"></ion-icon>
+                <ion-icon name="remove-outline" *ngIf="isAccordionExpanded"></ion-icon>
+                <ion-spinner *ngIf="filteredItems.length < 1" name="crescent" color="primary"></ion-spinner>
               </ion-item>
               <div class="home--result--last-days--items" slot="content" *ngFor="let item of filteredItems.slice(0, 29); index as i">
                 <ion-card>

@@ -42,9 +42,12 @@
 
 ion-accordion-group{
   ion-accordion {
+    width: 100vw;
     .ion-accordion-toggle-icon {
       color: var(--ion-color-primary);
       font-size: 2rem;
     }
   }
 }
+
+

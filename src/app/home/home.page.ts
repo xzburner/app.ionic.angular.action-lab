@@ -21,6 +21,8 @@ export class HomePage implements OnInit {
   public isPositive: boolean[] = [];
   public apiKey: string = 'RVZG0GHEV2KORLNA';
   public isLoading: boolean = false;
+  public isLoadingItemsFiltered: boolean = false;
+  public isAccordionExpanded: boolean = false;
   public currentDate: Date = new Date();
 
   public currentExchangeRate?: CurrentExchangeRateModel;
@@ -58,22 +60,27 @@ export class HomePage implements OnInit {
 
     this.exchangeRateService.getCurrentExchangeRate(this.apiKey, this.fromSymbol, this.toSymbol)
       .subscribe(
-        data => {
+        async data => {
           if (data.success) {
             this.currentExchangeRate = data;
             this.filteredItems = [];
+            await this.getDailyExchangeRate();
             this.isLoading = false;
+            this.isAccordionExpanded = false;
           } else {
             this.currentExchangeRate = undefined;
-            this.toastService.presentToast(MessagesConst.INVALID_CODE);
+            await this.toastService.presentToast(MessagesConst.INVALID_CODE);
             this.isLoading = false;
+            this.isLoadingItemsFiltered = false;
+            this.isAccordionExpanded = false;
           }
         },
       );
   }
 
   public getDailyExchangeRate(): void {
-    this.isLoading = true;
+    this.isLoadingItemsFiltered = true;
+    this.toggleAccordion();
     this.exchangeRateService.getDailyExchangeRate(this.apiKey, this.fromSymbol, this.toSymbol)
       .subscribe(
         async data => {
@@ -87,10 +94,19 @@ export class HomePage implements OnInit {
             });
             this.getDifferenceOnCloseDay();
             await this.filteredItems.pop();
+            this.isLoadingItemsFiltered = false;
           }
+          else {
+            await this.toastService.presentToast(MessagesConst.INVALID_CODE);
+            this.isLoadingItemsFiltered = false;
+          }
+
         },
       );
-    this.isLoading = false;
+  }
+
+  toggleAccordion() {
+    this.isAccordionExpanded = !this.isAccordionExpanded;
   }
 
   public getDifferenceOnCloseDay() {
