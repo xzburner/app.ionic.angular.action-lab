@@ -17,13 +17,15 @@ export class HomePage implements OnInit {
 
   public fromSymbol: string = '';
   public toSymbol: string = 'BRL';
+  public differenceOnClose: number[] = [];
+  public isPositive: boolean[] = [];
   public apiKey: string = 'RVZG0GHEV2KORLNA';
   public isLoading: boolean = false;
   public currentDate: Date = new Date();
 
   public currentExchangeRate?: CurrentExchangeRateModel;
   public dailyExchangeRate?: DailyExchangeRateModel;
-  public filteredDays: ExchageRateData[] = [];
+  public filteredItems: ExchageRateData[] = [];
   public exchangeRateForm: FormGroup;
 
   constructor(
@@ -59,7 +61,7 @@ export class HomePage implements OnInit {
         data => {
           if (data.success) {
             this.currentExchangeRate = data;
-            this.filteredDays = [];
+            this.filteredItems = [];
             this.isLoading = false;
           } else {
             this.currentExchangeRate = undefined;
@@ -74,19 +76,30 @@ export class HomePage implements OnInit {
     this.isLoading = true;
     this.exchangeRateService.getDailyExchangeRate(this.apiKey, this.fromSymbol, this.toSymbol)
       .subscribe(
-        data => {
+        async data => {
           if (data.success) {
             this.dailyExchangeRate = data;
             // @ts-ignore
-            this.filteredDays = data.data.filter(item => {
+            this.filteredItems = data.data.filter(item => {
               const itemDate = parseISO(item.date);
               const daysDifference = differenceInDays(this.currentDate, itemDate);
-              return daysDifference <= 30;
+              return daysDifference <= 31;
             });
+            this.getDifferenceOnCloseDay();
+            await this.filteredItems.pop();
           }
         },
       );
     this.isLoading = false;
   }
 
+  public getDifferenceOnCloseDay() {
+    for (let i = 0; i < this.filteredItems.length - 1; i++) {
+      const currentDay = this.filteredItems[i];
+      const previousDay = this.filteredItems[i + 1];
+      const differenceClose = (currentDay.close - previousDay.close).toFixed(3);
+      this.isPositive[i] = parseFloat(differenceClose) >= 0;
+      this.differenceOnClose[i] = parseFloat(differenceClose);
+    }
+  }
 }

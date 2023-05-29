@@ -36,7 +36,7 @@
               <ion-item slot="header">
                 <ion-label>LAST 30 DAYS</ion-label>
               </ion-item>
-              <div class="home--result--last-days--items" slot="content" *ngFor="let item of filteredDays">
+              <div class="home--result--last-days--items" slot="content" *ngFor="let item of filteredItems.slice(0, 29); index as i">
                 <ion-card>
                   <ion-card-content>
                     <section>
@@ -53,7 +53,10 @@
                       </section>
                     </div>
                     <section>
-                      <ion-label>CLOSE DIFF (%): <span>Teste</span></ion-label>
+                      <ion-label>CLOSE DIFF (%):
+                        <span [class]="isPositive[i] ? 'positive': 'negative'">
+                          {{differenceOnClose[i] > 0 ? '+'+ differenceOnClose[i] : differenceOnClose[i]}}
+                        </span></ion-label>
                     </section>
                   </ion-card-content>
                 </ion-card>
