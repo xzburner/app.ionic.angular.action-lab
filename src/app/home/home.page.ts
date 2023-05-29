@@ -1,18 +1,19 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessagesConst } from '../consts/messages-const';
 import { CurrentExchangeRateModel } from '../models/current-exchange-rate.model';
 import { DailyExchangeRateModel } from '../models/daily-exchange-rate.model';
 import { ExchangeRateService } from '../services/exchange-rate.service';
 import { ToastService } from '../services/toast.service';
 import { differenceInDays, parseISO } from 'date-fns';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit {
 
   public fromSymbol: string = '';
   public toSymbol: string = 'BRL';
@@ -34,6 +35,19 @@ export class HomePage {
     });
   }
 
+  public ngOnInit() {
+    this.codeToUperCase();
+  }
+
+  public codeToUperCase() {
+    const inputValueControl = this.exchangeRateForm.get('fromSymbol') as FormControl;
+    inputValueControl.valueChanges.pipe(
+      map(value => value.toUpperCase())
+    ).subscribe(upperCaseValue => {
+      inputValueControl.setValue(upperCaseValue, { emitEvent: false });
+    });
+  }
+
   public getCurrentExchangeRate(): void {
     this.isLoading = true;
     const formData = this.exchangeRateForm.value;
@@ -45,9 +59,11 @@ export class HomePage {
           if (data.success) {
             this.currentExchangeRate = data;
             console.log(this.currentExchangeRate);
+            this.dailyExchangeRate = [];
             this.isLoading = false;
           }
           else {
+            this.currentExchangeRate = undefined;
             this.toastService.presentToast(MessagesConst.INVALID_CODE);
             this.isLoading = false;
           }
@@ -57,9 +73,8 @@ export class HomePage {
 
   public getDailyExchangeRate(): void {
     this.isLoading = true;
-    const fromSymbol = 'USD';
-
-    this.exchangeRateService.getDailyExchangeRate(this.apiKey, fromSymbol, this.toSymbol)
+    console.log(this.fromSymbol);
+    this.exchangeRateService.getDailyExchangeRate(this.apiKey, this.fromSymbol, this.toSymbol)
       .subscribe(
         data => {
           if (data.success) {// @ts-ignore
@@ -68,7 +83,7 @@ export class HomePage {
               const daysDifference = differenceInDays(this.currentDate, itemDate);
               return daysDifference <= 30;
             });
-            console.log(this.dailyExchangeRate);
+            console.log(data);
           }
         },
       );

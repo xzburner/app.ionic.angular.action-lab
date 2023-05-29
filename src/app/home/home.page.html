@@ -4,18 +4,18 @@
   </div>
   <form [formGroup]="exchangeRateForm" (ngSubmit)="getCurrentExchangeRate()">
     <div class="home--currency">
-      <ion-input fill="solid" label="Enter the currency code" labelPlacement="floating" formControlName="fromSymbol"></ion-input>
+      <ion-input fill="solid" maxlength="3" label="Enter the currency code" labelPlacement="floating" formControlName="fromSymbol"></ion-input>
     </div>
     <ion-item>
       <div class="home--action">
-        <ion-button expand="block" class="button-submit" type="submit" [disabled]="exchangeRateForm.invalid">
+        <ion-button expand="block" class="button-submit" type="submit" [disabled]="exchangeRateForm.invalid || isLoading">
           <p *ngIf="!isLoading">EXCHANGE RESULT</p>
           <ion-spinner name="crescent" *ngIf="isLoading"></ion-spinner>
         </ion-button>
       </div>
     </ion-item>
   </form>
-  <div class="home--result" *ngIf="currentExchangeRate?.exchangeRate">
+  <div class="home--result" *ngIf="currentExchangeRate?.exchangeRate && !isLoading">
     <ion-item class="border-blue">
       <section>
         <div class="home--result--header">
